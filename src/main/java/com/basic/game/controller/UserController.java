@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/users")
+@RequestMapping("/users/api")
 public class UserController {
 
     private final UserService userService;
@@ -29,18 +29,18 @@ public class UserController {
         return userService.getAll();
     }
 
-    @PostMapping
+    @PostMapping("/create")
     public ResponseEntity<User> create(@RequestBody User user){
         userService.create(user);
         return ResponseEntity.ok().body(user);
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/delete/{id}")
     public void delete(@PathVariable int id){
         userService.delete(id);
     }
 
-    @PatchMapping(value ="/{id}")
+    @PatchMapping("/edit/{id}")
     public void update(@PathVariable int id,
                        @RequestBody User user){
         userService.update(user, id);
