@@ -35,8 +35,11 @@ public class UserService {
 
     @Transactional
     public void update(User updatedUser, int id) {
-        updatedUser.setId(id);
-        updatedUser.setRegisteredAt(get(id).orElseThrow().getRegisteredAt());
+
+        userRepository.getReferenceById(id).setEnabled(updatedUser.isEnabled());
+        userRepository.getReferenceById(id).setPhoneNumber(updatedUser.getPhoneNumber());
+        userRepository.getReferenceById(id).setNickName(updatedUser.getNickName());
+
         userRepository.save(updatedUser);
     }
 
