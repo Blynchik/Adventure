@@ -1,0 +1,31 @@
+2023-02-26 13:28:06,559 INFO  org.hibernate.validator.internal.util.Version.<clinit>:21 - HV000001: Hibernate Validator 8.0.0.Final
+2023-02-26 13:28:06,589 INFO  com.basic.game.GameApplication.logStarting:51 - Starting GameApplication using Java 18.0.2.1 with PID 6800 (C:\Users\Blynchik\Desktop\game\target\classes started by Blynchik in C:\Users\Blynchik\Desktop\game)
+2023-02-26 13:28:06,590 INFO  com.basic.game.GameApplication.logStartupProfileInfo:630 - No active profile set, falling back to 1 default profile: "default"
+2023-02-26 13:28:07,151 INFO  o.s.d.r.config.RepositoryConfigurationDelegate.registerRepositoriesIn:138 - Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2023-02-26 13:28:07,181 INFO  o.s.d.r.config.RepositoryConfigurationDelegate.registerRepositoriesIn:208 - Finished Spring Data repository scanning in 26 ms. Found 1 JPA repository interfaces.
+2023-02-26 13:28:07,547 INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer.initialize:108 - Tomcat initialized with port(s): 8080 (http)
+2023-02-26 13:28:07,553 INFO  org.apache.coyote.http11.Http11NioProtocol.log:173 - Initializing ProtocolHandler ["http-nio-8080"]
+2023-02-26 13:28:07,554 INFO  org.apache.catalina.core.StandardService.log:173 - Starting service [Tomcat]
+2023-02-26 13:28:07,554 INFO  org.apache.catalina.core.StandardEngine.log:173 - Starting Servlet engine: [Apache Tomcat/10.1.5]
+2023-02-26 13:28:07,616 INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/].log:173 - Initializing Spring embedded WebApplicationContext
+2023-02-26 13:28:07,616 INFO  o.s.b.w.s.c.ServletWebServerApplicationContext.prepareWebApplicationContext:291 - Root WebApplicationContext: initialization completed in 984 ms
+2023-02-26 13:28:07,710 INFO  org.hibernate.jpa.internal.util.LogHelper.logPersistenceUnitInformation:31 - HHH000204: Processing PersistenceUnitInfo [name: default]
+2023-02-26 13:28:07,740 INFO  org.hibernate.Version.logVersion:44 - HHH000412: Hibernate ORM core version 6.1.6.Final
+2023-02-26 13:28:07,857 WARN  org.hibernate.orm.deprecation.lambda$new$1:626 - HHH90000021: Encountered deprecated setting [javax.persistence.sharedCache.mode], use [jakarta.persistence.sharedCache.mode] instead
+2023-02-26 13:28:07,926 INFO  com.zaxxer.hikari.HikariDataSource.getConnection:110 - HikariPool-1 - Starting...
+2023-02-26 13:28:07,996 INFO  com.zaxxer.hikari.pool.HikariPool.checkFailFast:565 - HikariPool-1 - Added connection org.postgresql.jdbc.PgConnection@34f23816
+2023-02-26 13:28:07,997 INFO  com.zaxxer.hikari.HikariDataSource.getConnection:123 - HikariPool-1 - Start completed.
+2023-02-26 13:28:08,019 INFO  SQL dialect.logSelectedDialect:66 - HHH000400: Using dialect: org.hibernate.dialect.PostgreSQLDialect
+2023-02-26 13:28:08,518 INFO  o.h.e.t.jta.platform.internal.JtaPlatformInitiator.initiateService:51 - HHH000490: Using JtaPlatform implementation: [org.hibernate.engine.transaction.jta.platform.internal.NoJtaPlatform]
+2023-02-26 13:28:08,524 INFO  o.s.orm.jpa.LocalContainerEntityManagerFactoryBean.buildNativeEntityManagerFactory:437 - Initialized JPA EntityManagerFactory for persistence unit 'default'
+2023-02-26 13:28:08,765 WARN  o.s.b.a.o.j.JpaBaseConfiguration$JpaWebConfiguration.openEntityManagerInViewInterceptor:227 - spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2023-02-26 13:28:09,475 INFO  org.apache.coyote.http11.Http11NioProtocol.log:173 - Starting ProtocolHandler ["http-nio-8080"]
+2023-02-26 13:28:09,489 INFO  o.s.boot.web.embedded.tomcat.TomcatWebServer.start:220 - Tomcat started on port(s): 8080 (http) with context path ''
+2023-02-26 13:28:09,497 INFO  com.basic.game.GameApplication.logStarted:57 - Started GameApplication in 3.179 seconds (process running for 3.755)
+2023-02-26 13:28:12,724 INFO  o.a.c.core.ContainerBase.[Tomcat].[localhost].[/].log:173 - Initializing Spring DispatcherServlet 'dispatcherServlet'
+2023-02-26 13:28:12,724 INFO  org.springframework.web.servlet.DispatcherServlet.initServletBean:532 - Initializing Servlet 'dispatcherServlet'
+2023-02-26 13:28:12,725 INFO  org.springframework.web.servlet.DispatcherServlet.initServletBean:554 - Completed initialization in 0 ms
+2023-02-26 13:28:12,743 INFO  com.basic.game.controller.UserController.getAll:41 - UserController начал getAll
+2023-02-26 13:28:33,063 INFO  o.s.orm.jpa.LocalContainerEntityManagerFactoryBean.destroy:650 - Closing JPA EntityManagerFactory for persistence unit 'default'
+2023-02-26 13:28:33,064 INFO  com.zaxxer.hikari.HikariDataSource.close:350 - HikariPool-1 - Shutdown initiated...
+2023-02-26 13:28:33,067 INFO  com.zaxxer.hikari.HikariDataSource.close:352 - HikariPool-1 - Shutdown completed.
