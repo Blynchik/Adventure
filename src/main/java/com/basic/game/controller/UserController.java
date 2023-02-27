@@ -4,6 +4,7 @@ import com.basic.game.dto.UserTo;
 import com.basic.game.model.User;
 import com.basic.game.service.UserService;
 import com.basic.game.util.Converter;
+import com.basic.game.util.ErrorList;
 import jakarta.validation.Valid;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,14 +49,12 @@ public class UserController {
 
     @PostMapping()
     public ResponseEntity<Object> create(@RequestBody @Valid UserTo userTo,
-                                       BindingResult bindingResult) {
+                                         BindingResult bindingResult) {
         log.info("UserController начал create");
 
-        if (bindingResult.hasErrors()){
-            List<String> errors = bindingResult.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .toList();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(ErrorList.getList(bindingResult));
         }
 
         User user = new User();
@@ -78,15 +77,13 @@ public class UserController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<Object> update(@PathVariable int id,
-                                       @RequestBody @Valid UserTo userTo,
-                                       BindingResult bindingResult) {
+                                         @RequestBody @Valid UserTo userTo,
+                                         BindingResult bindingResult) {
         log.info("UserController начал update id:{}", id);
 
-        if (bindingResult.hasErrors()){
-            List<String> errors = bindingResult.getAllErrors().stream()
-                    .map(DefaultMessageSourceResolvable::getDefaultMessage)
-                    .toList();
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errors);
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body(ErrorList.getList(bindingResult));
         }
 
         if (userService.get(id).isPresent()) {
@@ -94,6 +91,6 @@ public class UserController {
             return ResponseEntity.ok().body(userService.get(id).get());
         }
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
     }
 }
