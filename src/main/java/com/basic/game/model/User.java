@@ -2,10 +2,13 @@ package com.basic.game.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 import java.util.Date;
+import java.util.Set;
 
 @Entity
 @Table(name = "users")
@@ -17,19 +20,21 @@ public class User {
     private int id;
 
     @Column(name = "nick_name")
-    @Size(max = 100, message = "Должно быть меньше 100 символов")
+    @NotBlank(message = "nickName не должно быть пустым")
+    @Size(min = 2, max = 100, message = "Должно быть больше 2 и меньше 100 символов")
     private String nickName;
 
     @Column(name = "phone_number")
+    @NotBlank(message = "phoneNumber не должно быть пустым")
     @Size(min = 12, max = 13, message = "Должно быть 12 знаков")
     private String phoneNumber;
 
-    @Column(name = "registered_at", nullable = false,columnDefinition = "timestamp default now()", updatable = false)
+    @Column(name = "registered_at", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
     @NotNull
     @JsonProperty(access = JsonProperty.Access.READ_ONLY)
     private Date registeredAt = new Date();
 
-    @Column(name = "enabled", nullable = false,columnDefinition = "bool default true")
+    @Column(name = "enabled", nullable = false, columnDefinition = "bool default true")
     @NotNull
     private boolean enabled = true;
 
