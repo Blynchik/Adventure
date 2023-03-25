@@ -1,8 +1,24 @@
 package com.adventure.base.model;
 
+import jakarta.persistence.*;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
+
+@Entity
+@Table(name = "users")
 public class User {
 
+    @Id
+    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
+    @Column(name = "email")
+    @NotBlank(message = "Введите электронную почту")
+    @NotNull(message = "Введите электронную почту")
+    @Size(max=100, message = "Должно быть меньше 100 символов")
+    @Email
     private String email;
 
     public User() {
