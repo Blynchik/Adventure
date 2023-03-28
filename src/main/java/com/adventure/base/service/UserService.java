@@ -2,6 +2,7 @@ package com.adventure.base.service;
 
 import com.adventure.base.model.User;
 import com.adventure.base.repository.UserRepository;
+import com.adventure.base.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -22,7 +23,7 @@ public class UserService {
 
     @Transactional
     public void create(User user) {
-        userRepository.save(user);
+        userRepository.save(UserUtil.prepareToSave(user));
     }
 
     public Optional<User> getUserById(long id) {
@@ -36,20 +37,21 @@ public class UserService {
     @Transactional
     public void update(long id, User updatedUser) {
 
-        if(userRepository.findById(id).isEmpty()){
-            return;
+        if (userRepository.existsById(id)) {
+            updatedUser.setId(id);
+            userRepository.save(UserUtil.prepareToSave(updatedUser));
         }
-
-        updatedUser.setId(id);
-        userRepository.save(updatedUser);
     }
 
     @Transactional
     public void delete(long id) {
-        userRepository.deleteById(id);
+
+        if (userRepository.existsById(id)) {
+            userRepository.deleteById(id);
+        }
     }
 
     public Optional<User> getByEmail(String email) {
-       return userRepository.findByEmail(email);
+        return userRepository.findByEmail(email);
     }
 }

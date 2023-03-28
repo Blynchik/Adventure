@@ -1,5 +1,5 @@
-drop table if exists users;
 drop table if exists role;
+drop table if exists users;
 
 create table users
 (
