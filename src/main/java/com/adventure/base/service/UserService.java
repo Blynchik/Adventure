@@ -35,6 +35,11 @@ public class UserService {
 
     @Transactional
     public void update(long id, User updatedUser) {
+
+        if(userRepository.findById(id).isEmpty()){
+            return;
+        }
+
         updatedUser.setId(id);
         userRepository.save(updatedUser);
     }
@@ -42,5 +47,9 @@ public class UserService {
     @Transactional
     public void delete(long id) {
         userRepository.deleteById(id);
+    }
+
+    public Optional<User> getByEmail(String email) {
+       return userRepository.findByEmail(email);
     }
 }
