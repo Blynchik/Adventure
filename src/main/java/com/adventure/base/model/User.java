@@ -9,10 +9,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
 
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.EnumSet;
-import java.util.Set;
+import java.util.*;
 
 @Entity
 @Table(name = "users")
@@ -35,6 +32,10 @@ public class User {
     @Size(min = 8, max = 100, message = "Пароль должен быть не меньше меньше 8 знаков")
     private String password;
 
+    @Column(name = "registered_at", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
+    @NotNull
+    private Date registeredAt = new Date();
+
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "role",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -49,16 +50,17 @@ public class User {
     }
 
     public User(User u) {
-        this(u.email, u.password, u.roles);
+        this(u.email, u.password, u.registeredAt, u.roles);
     }
 
     public User(String email, String password, Role... roles) {
-        this(email, password, Arrays.asList(roles));
+        this(email, password, new Date(), Arrays.asList((roles)));
     }
 
-    public User(String email, String password, Collection<Role> roles){
+    public User(String email, String password, Date registeredAt, Collection<Role> roles) {
         this.email = email;
-        this.password =password;
+        this.password = password;
+        this.registeredAt = registeredAt;
         setRoles(roles);
     }
 
@@ -92,5 +94,13 @@ public class User {
 
     public void setRoles(Collection<Role> roles) {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
+    }
+
+    public Date getRegisteredAt() {
+        return registeredAt;
+    }
+
+    public void setRegisteredAt(Date registeredAt) {
+        this.registeredAt = registeredAt;
     }
 }
