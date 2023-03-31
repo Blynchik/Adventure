@@ -46,6 +46,9 @@ public class User {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
+    private List<Adventurer> adventurers;
+
     public User() {
     }
 
@@ -102,5 +105,13 @@ public class User {
 
     public void setRegisteredAt(Date registeredAt) {
         this.registeredAt = registeredAt;
+    }
+
+    public List<Adventurer> getAdventurers() {
+        return adventurers;
+    }
+
+    public void setAdventurers(List<Adventurer> adventurers) {
+        this.adventurers = adventurers;
     }
 }

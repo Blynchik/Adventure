@@ -55,7 +55,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests()
-                .requestMatchers("/game/admin/**").hasRole(Role.ADMIN.name())
+//                .requestMatchers("/game/admin/**").hasRole(Role.ADMIN.name())
                 .requestMatchers("/game/**").authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
