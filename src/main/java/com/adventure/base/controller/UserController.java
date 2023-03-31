@@ -1,7 +1,9 @@
 package com.adventure.base.controller;
 
+import com.adventure.base.dto.UserDto;
 import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
+import com.adventure.base.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,8 +29,8 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getUser(@PathVariable long id) {
-        return ResponseEntity.ok().body(userService.getUserById(id).orElse(null));
+    public ResponseEntity<UserDto> getUser(@PathVariable long id) {
+        return ResponseEntity.ok().body(UserUtil.getDto(userService.getUserById(id).orElse(null)));
     }
 
     @GetMapping()

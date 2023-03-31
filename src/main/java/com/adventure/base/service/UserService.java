@@ -3,6 +3,7 @@ package com.adventure.base.service;
 import com.adventure.base.model.User;
 import com.adventure.base.repository.UserRepository;
 import com.adventure.base.util.UserUtil;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ public class UserService {
     }
 
     public Optional<User> getUserById(long id) {
+        Hibernate.initialize(userRepository.findById(id).get().getAdventurers());
         return userRepository.findById(id);
     }
 
