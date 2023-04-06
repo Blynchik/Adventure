@@ -8,8 +8,6 @@ import org.hibernate.validator.constraints.Range;
 
 public class AdventurerDto {
 
-    private UserDto user;
-
     @NotBlank(message = "Введите имя")
     @NotNull(message = "Введите имя")
     @Size(min = 1, max = 20, message = "Должно быть меньше 20 символов")
@@ -48,14 +46,6 @@ public class AdventurerDto {
 
     @NotNull(message = "Введите значение")
     private long money;
-
-    public UserDto getUser() {
-        return user;
-    }
-
-    public void setUser(UserDto user) {
-        this.user = user;
-    }
 
     public String getFirstName() {
         return firstName;
