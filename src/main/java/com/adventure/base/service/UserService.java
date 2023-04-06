@@ -33,7 +33,11 @@ public class UserService {
     }
 
     public List<User> getAllUsers() {
-        return userRepository.findAll();
+        List<User> users = userRepository.findAll();
+
+        users.forEach(u->Hibernate.initialize(u.getAdventurers()));
+
+        return users;
     }
 
     @Transactional
