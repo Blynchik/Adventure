@@ -1,14 +1,13 @@
 package com.adventure.base.model;
 
 import jakarta.persistence.*;
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
 
+import java.time.Instant;
 import java.util.*;
 
 @Entity
@@ -18,22 +17,16 @@ public class User {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
-    @Column(name = "email")
-    @NotBlank(message = "Введите электронную почту")
-    @NotNull(message = "Введите электронную почту")
-    @Size(max = 100, message = "Должно быть меньше 100 символов")
-    @Email
-    private String email;
+    private int id;
 
-    @Column(name = "password", nullable = false)
-    @NotBlank(message = "Введите пароль")
-    @NotNull(message = "Введите пароль")
-    @Size(min = 8, max = 100, message = "Пароль должен быть не меньше меньше 8 знаков")
-    private String password;
+    @Column(name = "name")
+    @NotBlank
+    @NotNull
+    private String name;
 
     @Column(name = "registered_at", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
     @NotNull
+    @Temporal(TemporalType.TIMESTAMP)
     private Date registeredAt = new Date();
 
     @Enumerated(EnumType.STRING)
@@ -53,42 +46,33 @@ public class User {
     }
 
     public User(User u) {
-        this(u.email, u.password, u.registeredAt, u.roles);
+        this(u.name, u.registeredAt, u.roles);
     }
 
-    public User(String email, String password, Role... roles) {
-        this(email, password, new Date(), Arrays.asList((roles)));
+    public User(String name, Role... roles) {
+        this(name, new Date(), Arrays.asList((roles)));
     }
 
-    public User(String email, String password, Date registeredAt, Collection<Role> roles) {
-        this.email = email;
-        this.password = password;
+    public User(String name, Date registeredAt, Collection<Role> roles) {
+        this.name = name;
         this.registeredAt = registeredAt;
         setRoles(roles);
     }
 
-    public long getId() {
+    public int getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(int id) {
         this.id = id;
     }
 
-    public String getEmail() {
-        return email;
+    public String getName() {
+        return name;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
+    public void setName(String name) {
+        this.name = name;
     }
 
     public Set<Role> getRoles() {

@@ -1,10 +1,8 @@
-insert into users (email, password)
-values ('vadimsovetnikov@mail.ru', '{noop}password'),
-       ('00sipand@gmail.com', '{noop}password');
+insert into users (name)
+values ('@BlynchikV');
 
 insert into role(user_id, role)
-values (1, 'ADMIN'),
-       (2, 'USER');
+values (1, 'ADMIN');
 
 insert into adventurer(user_id, first_name, last_name,
                        strength, agility, constitution,

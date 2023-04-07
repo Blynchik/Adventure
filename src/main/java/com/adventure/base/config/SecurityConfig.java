@@ -1,7 +1,6 @@
 package com.adventure.base.config;
 
 import com.adventure.base.model.AuthUser;
-import com.adventure.base.model.Role;
 import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,8 +36,8 @@ public class SecurityConfig {
 
     @Bean
     public UserDetailsService userDetailsService() {
-        return email -> {
-            Optional<User> optionalUser = userService.getByEmail(email);
+        return name -> {
+            Optional<User> optionalUser = userService.getByName(name);
 
             return new AuthUser(optionalUser.orElseThrow(
                     () -> new UsernameNotFoundException("Not found")

@@ -1,9 +1,7 @@
 package com.adventure.base.util;
 
 import com.adventure.base.dto.AdventurerDto;
-import com.adventure.base.dto.UserDto;
 import com.adventure.base.model.Adventurer;
-import com.adventure.base.model.User;
 import org.modelmapper.ModelMapper;
 
 public class AdventurerUtil {

@@ -2,7 +2,6 @@ package com.adventure.base.service;
 
 import com.adventure.base.model.User;
 import com.adventure.base.repository.UserRepository;
-import com.adventure.base.util.UserUtil;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -24,10 +23,10 @@ public class UserService {
 
     @Transactional
     public void create(User user) {
-        userRepository.save(UserUtil.prepareToSave(user));
+        userRepository.save(user);
     }
 
-    public Optional<User> getUserById(long id) {
+    public Optional<User> getUserById(int id) {
         Hibernate.initialize(userRepository.findById(id).get().getAdventurers());
         return userRepository.findById(id);
     }
@@ -41,23 +40,23 @@ public class UserService {
     }
 
     @Transactional
-    public void update(long id, User updatedUser) {
+    public void update(int id, User updatedUser) {
 
         if (userRepository.existsById(id)) {
             updatedUser.setId(id);
-            userRepository.save(UserUtil.prepareToSave(updatedUser));
+            userRepository.save((updatedUser));
         }
     }
 
     @Transactional
-    public void delete(long id) {
+    public void delete(int id) {
 
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
         }
     }
 
-    public Optional<User> getByEmail(String email) {
-        return userRepository.findByEmail(email);
+    public Optional<User> getByName(String name) {
+        return userRepository.findByName(name);
     }
 }
