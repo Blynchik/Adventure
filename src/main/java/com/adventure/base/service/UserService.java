@@ -51,6 +51,19 @@ public class UserService {
     }
 
     @Transactional
+    public void removeRole(int id, Role role) {
+
+        if (!role.equals(Role.USER)) {
+
+            if (userRepository.existsById(id)) {
+                userRepository.getReferenceById(id)
+                        .getRoles()
+                        .remove(role);
+            }
+        }
+    }
+
+    @Transactional
     public void delete(int id) {
 
         if (userRepository.existsById(id)) {
