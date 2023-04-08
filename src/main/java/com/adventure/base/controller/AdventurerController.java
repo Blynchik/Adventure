@@ -3,7 +3,7 @@ package com.adventure.base.controller;
 import com.adventure.base.dto.AdventurerDto;
 import com.adventure.base.model.Adventurer;
 import com.adventure.base.service.AdventurerService;
-import com.adventure.base.util.AdventurerUtil;
+import com.adventure.base.service.util.AdventurerUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

@@ -1,5 +1,6 @@
 package com.adventure.base.service;
 
+import com.adventure.base.model.Role;
 import com.adventure.base.model.User;
 import com.adventure.base.repository.UserRepository;
 import org.hibernate.Hibernate;
@@ -22,29 +23,30 @@ public class UserService {
     }
 
     @Transactional
-    public void create(User user) {
+    public void createNew(User user) {
+        user.getRoles().add(Role.USER);
         userRepository.save(user);
     }
 
-    public Optional<User> getUserById(int id) {
-        Hibernate.initialize(userRepository.findById(id).get().getAdventurers());
-        return userRepository.findById(id);
+    public Optional<User> getOneById(int id) {
+
+        Optional<User> user = userRepository.findById(id);
+        user.ifPresent(value -> Hibernate.initialize(value.getAdventurers()));
+
+        return user;
     }
 
-    public List<User> getAllUsers() {
-        List<User> users = userRepository.findAll();
-
-        users.forEach(u->Hibernate.initialize(u.getAdventurers()));
-
-        return users;
+    public List<User> getAll() {
+        return userRepository.findAll();
     }
 
     @Transactional
-    public void update(int id, User updatedUser) {
+    public void addRole(int id, Role role) {
 
         if (userRepository.existsById(id)) {
-            updatedUser.setId(id);
-            userRepository.save((updatedUser));
+            userRepository.getReferenceById(id)
+                    .getRoles()
+                    .add(role);
         }
     }
 

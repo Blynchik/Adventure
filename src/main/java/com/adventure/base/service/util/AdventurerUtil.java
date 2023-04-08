@@ -1,4 +1,4 @@
-package com.adventure.base.util;
+package com.adventure.base.service.util;
 
 import com.adventure.base.dto.AdventurerDto;
 import com.adventure.base.model.Adventurer;

@@ -1,7 +1,9 @@
 package com.adventure.base.controller;
 
+import com.adventure.base.dto.UserDto;
 import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
+import com.adventure.base.service.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -21,8 +23,9 @@ public class UserController {
     }
 
     @PostMapping()
-    public ResponseEntity<HttpStatus> create(@RequestBody User user) {
-        userService.create(user);
+    public ResponseEntity<HttpStatus> create(@RequestBody UserDto user) {
+        userService.create(
+                UserUtil.prepareToSave(user));
         return ResponseEntity.ok().build();
     }
 
@@ -36,12 +39,13 @@ public class UserController {
         return ResponseEntity.ok().body(userService.getAllUsers());
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<HttpStatus> updateUser(@PathVariable int id,
-                                                 @RequestBody User user) {
-        userService.update(id, user);
-        return ResponseEntity.ok().build();
-    }
+//    @PutMapping("/{id}")
+//    public ResponseEntity<HttpStatus> changeRole(@PathVariable int id,
+//                                                 @RequestParam Role role) {
+//        userService.update(id,
+//                UserUtil.prepareToSave(user));
+//        return ResponseEntity.ok().build();
+//    }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<HttpStatus> deleteUser(@PathVariable int id) {
