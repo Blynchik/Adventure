@@ -37,7 +37,7 @@ public class SecurityConfig {
     @Bean
     public UserDetailsService userDetailsService() {
         return name -> {
-            Optional<User> optionalUser = userService.getByName(name);
+            Optional<User> optionalUser = userService.checkName(name);
 
             return new AuthUser(optionalUser.orElseThrow(
                     () -> new UsernameNotFoundException("Not found")

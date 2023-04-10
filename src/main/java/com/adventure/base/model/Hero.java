@@ -8,8 +8,8 @@ import org.hibernate.validator.constraints.Range;
 import java.util.Date;
 
 @Entity
-@Table(name = "adventurer")
-public class Adventurer {
+@Table(name = "hero")
+public class Hero {
 
     @Id
     @Column(name = "id")
@@ -79,14 +79,14 @@ public class Adventurer {
     @NotNull
     private Date createdAt = new Date();
 
-    public Adventurer() {
+    public Hero() {
     }
 
-    public Adventurer(User user, String firstName, String lastName,
-                      int strength, int agility, int constitution,
-                      int intelligence, int wisdom, int charisma,
-                      int evilGood, int chaoticLawful, long money,
-                      boolean playable, Date createdAt) {
+    public Hero(User user, String firstName, String lastName,
+                int strength, int agility, int constitution,
+                int intelligence, int wisdom, int charisma,
+                int evilGood, int chaoticLawful, long money,
+                boolean playable, Date createdAt) {
         this.user = user;
         this.firstName = firstName;
         this.lastName = lastName;

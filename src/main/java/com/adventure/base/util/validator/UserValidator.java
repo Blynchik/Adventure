@@ -1,4 +1,4 @@
-package com.adventure.base.service.util.validator;
+package com.adventure.base.util.validator;
 
 import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
@@ -24,7 +24,7 @@ public class UserValidator implements Validator {
     public void validate(Object target, Errors errors) {
         User user = (User) target;
 
-        if (userService.getByName(user.getName()).isPresent()){
+        if (userService.checkName(user.getName()).isPresent()){
             errors.rejectValue("name", "", "Уже существует");
         }
     }

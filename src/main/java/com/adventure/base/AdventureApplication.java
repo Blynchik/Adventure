@@ -7,6 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class AdventureApplication {
 
 	public static void main(String[] args) {
+
 		SpringApplication.run(AdventureApplication.class, args);
 	}
 

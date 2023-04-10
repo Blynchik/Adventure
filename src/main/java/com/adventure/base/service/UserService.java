@@ -3,11 +3,15 @@ package com.adventure.base.service;
 import com.adventure.base.model.Role;
 import com.adventure.base.model.User;
 import com.adventure.base.repository.UserRepository;
+import com.adventure.base.util.exception.EmptyListException;
+import com.adventure.base.util.exception.ForbiddenActionException;
+import com.adventure.base.util.exception.UserNotFoundException;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
@@ -28,16 +32,24 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public Optional<User> getOneById(int id) {
+    public User getOneById(int id) {
 
         Optional<User> user = userRepository.findById(id);
-        user.ifPresent(value -> Hibernate.initialize(value.getAdventurers()));
 
-        return user;
+        user.ifPresent(value -> Hibernate.initialize(value.getHeroes()));
+
+        return user.orElseThrow(UserNotFoundException::new);
     }
 
     public List<User> getAll() {
-        return userRepository.findAll();
+
+        List<User> users = userRepository.findAll();
+
+        if (users.isEmpty()) {
+            throw new EmptyListException();
+        }
+
+        return users;
     }
 
     @Transactional
@@ -47,6 +59,8 @@ public class UserService {
             userRepository.getReferenceById(id)
                     .getRoles()
                     .add(role);
+        } else {
+            throw new UserNotFoundException();
         }
     }
 
@@ -59,7 +73,12 @@ public class UserService {
                 userRepository.getReferenceById(id)
                         .getRoles()
                         .remove(role);
+            } else {
+                throw new UserNotFoundException();
             }
+
+        } else {
+            throw new ForbiddenActionException();
         }
     }
 
@@ -68,10 +87,21 @@ public class UserService {
 
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
+        } else {
+            throw new UserNotFoundException();
         }
     }
 
-    public Optional<User> getByName(String name) {
+    public User getByName(String name) {
+
+        Optional<User> user = userRepository.findByName(name);
+
+        user.ifPresent(value -> value.setHeroes(Collections.emptyList()));
+
+        return user.orElseThrow(UserNotFoundException::new);
+    }
+
+    public Optional<User> checkName(String name) {
         return userRepository.findByName(name);
     }
 }

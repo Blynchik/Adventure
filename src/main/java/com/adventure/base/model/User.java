@@ -1,6 +1,9 @@
 package com.adventure.base.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -8,11 +11,11 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
 
-import java.time.Instant;
 import java.util.*;
 
 @Entity
 @Table(name = "users")
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
 
     @Id
@@ -40,8 +43,8 @@ public class User {
     @OnDelete(action = OnDeleteAction.CASCADE)
     private Set<Role> roles;
 
-    @OneToMany(mappedBy = "user")
-    private List<Adventurer> adventurers;
+    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    private List<Hero> heroes;
 
     public User() {
     }
@@ -92,11 +95,11 @@ public class User {
         this.registeredAt = registeredAt;
     }
 
-    public List<Adventurer> getAdventurers() {
-        return adventurers;
+    public List<Hero> getHeroes() {
+        return heroes;
     }
 
-    public void setAdventurers(List<Adventurer> adventurers) {
-        this.adventurers = adventurers;
+    public void setHeroes(List<Hero> heroes) {
+        this.heroes = heroes;
     }
 }

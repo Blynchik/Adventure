@@ -5,7 +5,7 @@ insert into role(user_id, role)
                     values (1, 'ADMIN'),
                            (1, 'USER');
 
-insert into adventurer(user_id, first_name, last_name,
+insert into hero(user_id, first_name, last_name,
                        strength, agility, constitution,
                        intelligence, wisdom, charisma,
                        evil_good, chaotic_lawful, money)
