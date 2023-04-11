@@ -38,7 +38,11 @@ public class UserService {
 
         user.ifPresent(value -> Hibernate.initialize(value.getHeroes()));
 
-        return user.orElseThrow(UserNotFoundException::new);
+        if(user.isEmpty()){
+            throw new UserNotFoundException(String.valueOf(id));
+        }
+
+        return user.get();
     }
 
     public List<User> getAll() {
@@ -60,7 +64,7 @@ public class UserService {
                     .getRoles()
                     .add(role);
         } else {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(String.valueOf(id));
         }
     }
 
@@ -74,7 +78,7 @@ public class UserService {
                         .getRoles()
                         .remove(role);
             } else {
-                throw new UserNotFoundException();
+                throw new UserNotFoundException(String.valueOf(id));
             }
 
         } else {
@@ -88,7 +92,7 @@ public class UserService {
         if (userRepository.existsById(id)) {
             userRepository.deleteById(id);
         } else {
-            throw new UserNotFoundException();
+            throw new UserNotFoundException(String.valueOf(id));
         }
     }
 
@@ -98,7 +102,11 @@ public class UserService {
 
         user.ifPresent(value -> value.setHeroes(Collections.emptyList()));
 
-        return user.orElseThrow(UserNotFoundException::new);
+        if(user.isEmpty()){
+            throw new UserNotFoundException(name);
+        }
+
+        return user.get();
     }
 
     public Optional<User> checkName(String name) {

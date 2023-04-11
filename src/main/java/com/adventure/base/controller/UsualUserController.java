@@ -3,11 +3,16 @@ package com.adventure.base.controller;
 import com.adventure.base.model.AuthUser;
 import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
+import com.adventure.base.util.exception.UserNotFoundException;
+import com.adventure.base.util.exceptionResponse.UserExceptionResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
+
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/game/user")
