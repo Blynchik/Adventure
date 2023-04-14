@@ -18,7 +18,7 @@ public class UserControllerExceptionHandler {
     @ExceptionHandler
     private ResponseEntity<UserExceptionResponse> handleException(UserNotFoundException e) {
         UserExceptionResponse response = new UserExceptionResponse(
-                "Пользователь " + e.getName() + " не найден", LocalDateTime.now());
+                "Пользователь " + e.getMessage() + " не найден", LocalDateTime.now());
 
         return new ResponseEntity<>(response, HttpStatus.NOT_FOUND);
     }
@@ -34,7 +34,7 @@ public class UserControllerExceptionHandler {
     @ExceptionHandler
     private ResponseEntity<UserExceptionResponse> handleException(ForbiddenActionException e) {
         UserExceptionResponse response = new UserExceptionResponse(
-                "Нельзя убрать права пользователя", LocalDateTime.now());
+                "Нельзя удалить права пользователя", LocalDateTime.now());
 
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }

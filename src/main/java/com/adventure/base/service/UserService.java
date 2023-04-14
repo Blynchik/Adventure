@@ -1,6 +1,6 @@
 package com.adventure.base.service;
 
-import com.adventure.base.model.Role;
+import com.adventure.base.model.role.Role;
 import com.adventure.base.model.User;
 import com.adventure.base.repository.UserRepository;
 import com.adventure.base.util.exception.EmptyListException;
@@ -36,11 +36,11 @@ public class UserService {
 
         Optional<User> user = userRepository.findById(id);
 
-        user.ifPresent(value -> Hibernate.initialize(value.getHeroes()));
-
         if(user.isEmpty()){
             throw new UserNotFoundException(String.valueOf(id));
         }
+
+        Hibernate.initialize(user.get().getHeroes());
 
         return user.get();
     }
@@ -49,8 +49,12 @@ public class UserService {
 
         List<User> users = userRepository.findAll();
 
-        if (users.isEmpty()) {
+        if (users.size() == 1) {
             throw new EmptyListException();
+        }
+
+        for(User user:users){
+            user.setHeroes(Collections.emptyList());
         }
 
         return users;
@@ -60,9 +64,10 @@ public class UserService {
     public void addRole(int id, Role role) {
 
         if (userRepository.existsById(id)) {
-            userRepository.getReferenceById(id)
-                    .getRoles()
-                    .add(role);
+            User user  = userRepository.getReferenceById(id);
+            user.getRoles().add(role);
+            userRepository.save(user);
+
         } else {
             throw new UserNotFoundException(String.valueOf(id));
         }
@@ -74,9 +79,9 @@ public class UserService {
         if (!role.equals(Role.USER)) {
 
             if (userRepository.existsById(id)) {
-                userRepository.getReferenceById(id)
-                        .getRoles()
-                        .remove(role);
+                User user = userRepository.getReferenceById(id);
+                user.getRoles().remove(role);
+                userRepository.save(user);
             } else {
                 throw new UserNotFoundException(String.valueOf(id));
             }
@@ -100,11 +105,11 @@ public class UserService {
 
         Optional<User> user = userRepository.findByName(name);
 
-        user.ifPresent(value -> value.setHeroes(Collections.emptyList()));
-
         if(user.isEmpty()){
             throw new UserNotFoundException(name);
         }
+
+        user.get().setHeroes(Collections.emptyList());
 
         return user.get();
     }

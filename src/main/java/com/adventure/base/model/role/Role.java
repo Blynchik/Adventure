@@ -1,4 +1,4 @@
-package com.adventure.base.model;
+package com.adventure.base.model.role;
 
 import org.springframework.security.core.GrantedAuthority;
 

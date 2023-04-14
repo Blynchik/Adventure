@@ -1,19 +1,11 @@
 package com.adventure.base.util.exception;
 
-public class UserNotFoundException extends RuntimeException{
-    String nameOrId;
+public class UserNotFoundException extends RuntimeException {
 
-    public UserNotFoundException() {}
-
-   public UserNotFoundException(String nameOrId){
-       this.nameOrId = nameOrId;
-   }
-
-    public String getName() {
-        return nameOrId;
+    public UserNotFoundException() {
     }
 
-    public void setName(String nameOrId) {
-        this.nameOrId = nameOrId;
+    public UserNotFoundException(String errorMessage) {
+        super(errorMessage);
     }
 }

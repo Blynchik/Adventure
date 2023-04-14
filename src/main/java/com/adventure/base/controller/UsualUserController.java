@@ -3,43 +3,32 @@ package com.adventure.base.controller;
 import com.adventure.base.model.AuthUser;
 import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
-import com.adventure.base.util.exception.UserNotFoundException;
-import com.adventure.base.util.exceptionResponse.UserExceptionResponse;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
-import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/game/user")
-public class UsualUserController {
+public class UsualUserController extends AbstractUserController {
 
-    private final UserService userService;
-
-    @Autowired
     public UsualUserController(UserService userService) {
-        this.userService = userService;
+        super(userService);
     }
 
-    @GetMapping()
+    @GetMapping
     public ResponseEntity<User> getOwn(@AuthenticationPrincipal AuthUser authUser) {
-        return ResponseEntity.ok().body(
-                userService.getOneById(authUser.id()));
+        return super.getOne(authUser.id());
     }
 
-    @DeleteMapping()
-    public ResponseEntity<HttpStatus> deleteOwn(@AuthenticationPrincipal AuthUser authUser) {
-        userService.delete(authUser.id());
-        return ResponseEntity.ok().build();
+    @DeleteMapping
+    @ResponseStatus(HttpStatus.NO_CONTENT)
+    public void deleteOwn(@AuthenticationPrincipal AuthUser authUser) {
+        super.delete(authUser.id());
     }
 
-    @GetMapping("/findAnother")
-    public ResponseEntity<User> getAnother(@RequestParam String name){
-       return ResponseEntity.ok(
-               userService.getByName(name));
+    @GetMapping("/getAnother") public ResponseEntity<User> getAnother(@RequestParam String name) {
+        return super.getAnother(name);
     }
 }

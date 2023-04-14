@@ -25,7 +25,7 @@ public class UserValidator implements Validator {
         User user = (User) target;
 
         if (userService.checkName(user.getName()).isPresent()){
-            errors.rejectValue("name", "", "Уже существует");
+            errors.rejectValue("name", "", user.getName() + " уже зарегистрировано");
         }
     }
 }

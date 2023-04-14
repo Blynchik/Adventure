@@ -1,6 +1,7 @@
 package com.adventure.base.config;
 
 import com.adventure.base.model.AuthUser;
+import com.adventure.base.model.role.Role;
 import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +55,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
 
         http.authorizeHttpRequests()
-//                .requestMatchers("/game/admin/**").hasRole(Role.ADMIN.name())
+                .requestMatchers("/game/admin/**").hasRole(Role.ADMIN.name())
                 .requestMatchers("/game/**").authenticated()
                 .and().httpBasic()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
