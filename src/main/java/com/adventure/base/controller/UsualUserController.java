@@ -28,7 +28,8 @@ public class UsualUserController extends AbstractUserController {
         super.delete(authUser.id());
     }
 
-    @GetMapping("/getAnother") public ResponseEntity<User> getAnother(@RequestParam String name) {
+    @GetMapping("/getAnother")
+    public ResponseEntity<User> getAnother(@RequestParam String name) {
         return super.getAnother(name);
     }
 }

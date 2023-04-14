@@ -3,9 +3,6 @@ package com.adventure.base.service;
 import com.adventure.base.model.role.Role;
 import com.adventure.base.model.User;
 import com.adventure.base.repository.UserRepository;
-import com.adventure.base.util.exception.EmptyListException;
-import com.adventure.base.util.exception.ForbiddenActionException;
-import com.adventure.base.util.exception.UserNotFoundException;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -32,28 +29,19 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public User getOneById(int id) {
+    public Optional<User> getOneById(int id) {
 
         Optional<User> user = userRepository.findById(id);
+        user.ifPresent(u -> Hibernate.initialize(user.get().getHeroes()));
 
-        if(user.isEmpty()){
-            throw new UserNotFoundException(String.valueOf(id));
-        }
-
-        Hibernate.initialize(user.get().getHeroes());
-
-        return user.get();
+        return user;
     }
 
     public List<User> getAll() {
 
         List<User> users = userRepository.findAll();
 
-        if (users.size() == 1) {
-            throw new EmptyListException();
-        }
-
-        for(User user:users){
+        for (User user : users) {
             user.setHeroes(Collections.emptyList());
         }
 
@@ -62,59 +50,36 @@ public class UserService {
 
     @Transactional
     public void addRole(int id, Role role) {
-
-        if (userRepository.existsById(id)) {
-            User user  = userRepository.getReferenceById(id);
-            user.getRoles().add(role);
-            userRepository.save(user);
-
-        } else {
-            throw new UserNotFoundException(String.valueOf(id));
-        }
+        User user = userRepository.getReferenceById(id);
+        user.getRoles().add(role);
+        userRepository.save(user);
     }
 
     @Transactional
     public void removeRole(int id, Role role) {
-
-        if (!role.equals(Role.USER)) {
-
-            if (userRepository.existsById(id)) {
-                User user = userRepository.getReferenceById(id);
-                user.getRoles().remove(role);
-                userRepository.save(user);
-            } else {
-                throw new UserNotFoundException(String.valueOf(id));
-            }
-
-        } else {
-            throw new ForbiddenActionException();
-        }
+        User user = userRepository.getReferenceById(id);
+        user.getRoles().remove(role);
+        userRepository.save(user);
     }
 
     @Transactional
     public void delete(int id) {
-
-        if (userRepository.existsById(id)) {
-            userRepository.deleteById(id);
-        } else {
-            throw new UserNotFoundException(String.valueOf(id));
-        }
+        userRepository.deleteById(id);
     }
 
-    public User getByName(String name) {
+    public Optional<User> getByName(String name) {
 
         Optional<User> user = userRepository.findByName(name);
+        user.ifPresent(u -> u.setHeroes(Collections.emptyList()));
 
-        if(user.isEmpty()){
-            throw new UserNotFoundException(name);
-        }
-
-        user.get().setHeroes(Collections.emptyList());
-
-        return user.get();
+        return user;
     }
 
     public Optional<User> checkName(String name) {
         return userRepository.findByName(name);
+    }
+
+    public boolean checkExistence(int id) {
+        return userRepository.existsById(id);
     }
 }
