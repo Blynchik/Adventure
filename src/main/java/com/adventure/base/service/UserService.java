@@ -39,13 +39,7 @@ public class UserService {
 
     public List<User> getAll() {
 
-        List<User> users = userRepository.findAll();
-
-        for (User user : users) {
-            user.setHeroes(Collections.emptyList());
-        }
-
-        return users;
+        return userRepository.findAll();
     }
 
     @Transactional
@@ -75,11 +69,11 @@ public class UserService {
         return user;
     }
 
-    public Optional<User> checkName(String name) {
-        return userRepository.findByName(name);
+    public boolean nameExistence(String name) {
+        return userRepository.findByName(name).isPresent();
     }
 
-    public boolean checkExistence(int id) {
+    public boolean idExistence(int id) {
         return userRepository.existsById(id);
     }
 }

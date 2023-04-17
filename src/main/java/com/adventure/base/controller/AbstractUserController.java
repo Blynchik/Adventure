@@ -30,7 +30,7 @@ public abstract class AbstractUserController {
     }
 
     public void delete(int id) {
-        if (userService.checkExistence(id)) {
+        if (userService.idExistence(id)) {
             userService.delete(id);
         } else {
             throw new UserNotFoundException(String.valueOf(id));

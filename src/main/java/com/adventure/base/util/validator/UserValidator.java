@@ -1,11 +1,14 @@
 package com.adventure.base.util.validator;
 
-import com.adventure.base.model.User;
+import com.adventure.base.dto.UserDto;
+import com.adventure.base.dto.UserDtoForCreating;
 import com.adventure.base.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
+@Component
 public class UserValidator implements Validator {
 
     private final UserService userService;
@@ -17,15 +20,15 @@ public class UserValidator implements Validator {
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return User.class.equals(clazz);
+        return UserDtoForCreating.class.equals(clazz);
     }
 
     @Override
     public void validate(Object target, Errors errors) {
-        User user = (User) target;
+        UserDtoForCreating user = (UserDtoForCreating) target;
 
-        if (userService.checkName(user.getName()).isPresent()){
-            errors.rejectValue("name", "", user.getName() + " уже зарегистрировано");
+        if (userService.nameExistence(user.getName())) {
+            errors.rejectValue("name", "", "Имя " + user.getName() + " уже зарегистрировано");
         }
     }
 }

@@ -1,31 +1,44 @@
 package com.adventure.base.controller;
 
-import com.adventure.base.model.AuthUser;
+import com.adventure.base.dto.UserDto;
+import com.adventure.base.dto.UserDtoForCreating;
 import com.adventure.base.model.role.ActionWithRole;
 import com.adventure.base.model.role.Role;
 import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
+import com.adventure.base.util.Converter;
 import com.adventure.base.util.exception.ForbiddenActionException;
 import com.adventure.base.util.exception.UserNotFoundException;
+import com.adventure.base.util.validator.UserValidator;
 import jakarta.validation.Valid;
+import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("/game/admin/user")
 public class AdminUserController extends AbstractUserController {
 
-    public AdminUserController(UserService userService) {
+    private final UserValidator userValidator;
+
+    public AdminUserController(UserService userService,
+                               UserValidator userValidator) {
         super(userService);
+        this.userValidator = userValidator;
     }
 
     @GetMapping()
-    public ResponseEntity<?> getAll(@AuthenticationPrincipal AuthUser authUser) {
-        List<User> users = userService.getAll();
+    public ResponseEntity<?> getAll() {
+
+        List<UserDto> users = userService.getAll()
+                .stream()
+                .map(Converter::getUserDto)
+                .collect(Collectors.toList());
 
         if (users.size() == 1) {
             return ResponseEntity.ok("Пользователей не найдено");
@@ -46,13 +59,22 @@ public class AdminUserController extends AbstractUserController {
     }
 
     @PostMapping()
-    public ResponseEntity<User> create(@RequestParam String name) {
+    public ResponseEntity<?> create(@Valid @RequestBody UserDtoForCreating userDto,
+                                    BindingResult bindingResult) {
 
-        @Valid
-        User user = new User(name);
+        userValidator.validate(userDto, bindingResult);
 
-        userService.createNew(user);
-        return ResponseEntity.status(HttpStatus.CREATED).body(user);
+
+        if (bindingResult.hasErrors()) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                    .body(bindingResult.getAllErrors().stream()
+                            .map(DefaultMessageSourceResolvable::getDefaultMessage));
+        }
+
+        userService.createNew(Converter.getUser(userDto));
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                userService.getByName(userDto.getName()).get());
     }
 
     @PatchMapping("/{id}")
@@ -61,7 +83,7 @@ public class AdminUserController extends AbstractUserController {
                             @RequestParam ActionWithRole action,
                             @RequestParam Role role) {
 
-        if (userService.checkExistence(id)) {
+        if (userService.idExistence(id)) {
 
             switch (action) {
                 case ADD -> userService.addRole(id, role);
