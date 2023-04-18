@@ -13,7 +13,6 @@ import java.util.*;
 
 @Entity
 @Table(name = "users")
-@JsonInclude(JsonInclude.Include.NON_NULL)
 public class User {
 
     @Id

@@ -1,7 +1,6 @@
 package com.adventure.base.util.validator;
 
-import com.adventure.base.dto.UserDto;
-import com.adventure.base.dto.UserDtoForCreating;
+import com.adventure.base.dto.user.UserDtoForCreating;
 import com.adventure.base.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

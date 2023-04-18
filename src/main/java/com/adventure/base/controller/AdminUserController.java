@@ -1,7 +1,7 @@
 package com.adventure.base.controller;
 
-import com.adventure.base.dto.UserDto;
-import com.adventure.base.dto.UserDtoForCreating;
+import com.adventure.base.dto.user.UserDto;
+import com.adventure.base.dto.user.UserDtoForCreating;
 import com.adventure.base.model.role.ActionWithRole;
 import com.adventure.base.model.role.Role;
 import com.adventure.base.model.User;

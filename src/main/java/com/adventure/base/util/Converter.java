@@ -1,7 +1,7 @@
 package com.adventure.base.util;
 
-import com.adventure.base.dto.UserDto;
-import com.adventure.base.dto.UserDtoForCreating;
+import com.adventure.base.dto.user.UserDto;
+import com.adventure.base.dto.user.UserDtoForCreating;
 import com.adventure.base.model.User;
 import org.modelmapper.ModelMapper;
 

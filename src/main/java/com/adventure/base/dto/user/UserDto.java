@@ -1,11 +1,10 @@
-package com.adventure.base.dto;
+package com.adventure.base.dto.user;
 
 import com.adventure.base.model.role.Role;
 
-import java.util.Date;
 import java.util.Set;
 
-public class UserDto extends  UserDtoForCreating{
+public class UserDto extends UserDtoForCreating {
 
     private int id;
 
