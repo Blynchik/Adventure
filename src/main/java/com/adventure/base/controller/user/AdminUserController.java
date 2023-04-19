@@ -4,7 +4,6 @@ import com.adventure.base.dto.user.UserDto;
 import com.adventure.base.dto.user.UserDtoForCreating;
 import com.adventure.base.model.role.ActionWithRole;
 import com.adventure.base.model.role.Role;
-import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
 import com.adventure.base.util.Converter;
 import com.adventure.base.util.exception.ForbiddenActionException;
@@ -50,7 +49,7 @@ public class AdminUserController extends AbstractUserController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<User> getOne(@PathVariable int id) {
+    public ResponseEntity<UserDto> getOne(@PathVariable int id) {
         return super.getOne(id);
     }
 

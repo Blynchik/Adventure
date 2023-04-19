@@ -1,7 +1,9 @@
 package com.adventure.base.controller.user;
 
+import com.adventure.base.dto.user.UserDto;
 import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
+import com.adventure.base.util.Converter;
 import com.adventure.base.util.exception.notFound.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +19,7 @@ public abstract class AbstractUserController {
         this.userService = userService;
     }
 
-    public ResponseEntity<User> getOne(int id) {
+    public ResponseEntity<UserDto> getOne(int id) {
 
         Optional<User> user = userService.getOneById(id);
 
@@ -26,7 +28,7 @@ public abstract class AbstractUserController {
         }
 
         return ResponseEntity.ok().body(
-                user.get());
+                Converter.getEnrichedUserDto(user.get()));
     }
 
     public void delete(int id) {
@@ -37,7 +39,7 @@ public abstract class AbstractUserController {
         }
     }
 
-    public ResponseEntity<User> getAnother(String name) {
+    public ResponseEntity<UserDto> getAnother(String name) {
 
         Optional<User> user = userService.getByName(name);
 
@@ -45,6 +47,7 @@ public abstract class AbstractUserController {
             throw new UserNotFoundException(name);
         }
 
-        return ResponseEntity.ok(user.get());
+        return ResponseEntity.ok(
+                Converter.getUserDto(user.get()));
     }
 }

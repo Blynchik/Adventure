@@ -1,7 +1,9 @@
 package com.adventure.base.controller.hero;
 
+import com.adventure.base.dto.hero.HeroDto;
 import com.adventure.base.model.Hero;
 import com.adventure.base.service.HeroService;
+import com.adventure.base.util.Converter;
 import com.adventure.base.util.exception.notFound.HeroNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,14 +26,15 @@ public class UserHeroController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<Hero> getOne(@PathVariable int id){
+    public ResponseEntity<HeroDto> getOne(@PathVariable int id) {
 
         Optional<Hero> hero = heroService.getOneById(id);
 
-        if(hero.isEmpty()){
+        if (hero.isEmpty()) {
             throw new HeroNotFoundException(String.valueOf(id));
         }
 
-        return ResponseEntity.ok().body(heroService.getOneById(id).get());
+        return ResponseEntity.ok().body(
+                Converter.getHeroDto(hero.get()));
     }
 }

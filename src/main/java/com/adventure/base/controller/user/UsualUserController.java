@@ -1,6 +1,6 @@
 package com.adventure.base.controller.user;
 
-import com.adventure.base.controller.user.AbstractUserController;
+import com.adventure.base.dto.user.UserDto;
 import com.adventure.base.model.AuthUser;
 import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
@@ -19,7 +19,7 @@ public class UsualUserController extends AbstractUserController {
     }
 
     @GetMapping
-    public ResponseEntity<User> getOwn(@AuthenticationPrincipal AuthUser authUser) {
+    public ResponseEntity<UserDto> getOwn(@AuthenticationPrincipal AuthUser authUser) {
         return super.getOne(authUser.id());
     }
 
@@ -29,8 +29,8 @@ public class UsualUserController extends AbstractUserController {
         super.delete(authUser.id());
     }
 
-    @GetMapping("/getAnother")
-    public ResponseEntity<User> getAnother(@RequestParam String name) {
+    @GetMapping("/getAnotherByName")
+    public ResponseEntity<UserDto> getAnother(@RequestParam String name) {
         return super.getAnother(name);
     }
 }

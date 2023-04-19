@@ -63,10 +63,7 @@ public class UserService {
 
     public Optional<User> getByName(String name) {
 
-        Optional<User> user = userRepository.findByName(name);
-        user.ifPresent(u -> u.setHeroes(Collections.emptyList()));
-
-        return user;
+        return userRepository.findByName(name);
     }
 
     public boolean nameExistence(String name) {
