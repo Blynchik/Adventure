@@ -1,4 +1,4 @@
-package com.adventure.base.controller;
+package com.adventure.base.controller.user;
 
 import com.adventure.base.dto.user.UserDto;
 import com.adventure.base.dto.user.UserDtoForCreating;
@@ -8,9 +8,10 @@ import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
 import com.adventure.base.util.Converter;
 import com.adventure.base.util.exception.ForbiddenActionException;
-import com.adventure.base.util.exception.UserNotFoundException;
+import com.adventure.base.util.exception.notFound.UserNotFoundException;
 import com.adventure.base.util.validator.UserValidator;
 import jakarta.validation.Valid;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,6 +27,7 @@ public class AdminUserController extends AbstractUserController {
 
     private final UserValidator userValidator;
 
+    @Autowired
     public AdminUserController(UserService userService,
                                UserValidator userValidator) {
         super(userService);

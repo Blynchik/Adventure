@@ -1,5 +1,6 @@
-package com.adventure.base.controller;
+package com.adventure.base.controller.user;
 
+import com.adventure.base.controller.user.AbstractUserController;
 import com.adventure.base.model.AuthUser;
 import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;

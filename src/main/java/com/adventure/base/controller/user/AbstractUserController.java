@@ -1,8 +1,8 @@
-package com.adventure.base.controller;
+package com.adventure.base.controller.user;
 
 import com.adventure.base.model.User;
 import com.adventure.base.service.UserService;
-import com.adventure.base.util.exception.UserNotFoundException;
+import com.adventure.base.util.exception.notFound.UserNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 

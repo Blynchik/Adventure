@@ -17,6 +17,7 @@ public class Hero {
 
     @ManyToOne
     @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @JsonIgnore
     private User user;
 
     @Column(name = "first_name")

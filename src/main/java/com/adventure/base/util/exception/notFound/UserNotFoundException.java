@@ -1,6 +1,6 @@
-package com.adventure.base.util.exception;
+package com.adventure.base.util.exception.notFound;
 
-public class UserNotFoundException extends RuntimeException {
+public class UserNotFoundException extends NotFoundException {
 
     public UserNotFoundException() {
     }

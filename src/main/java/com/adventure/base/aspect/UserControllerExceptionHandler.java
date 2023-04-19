@@ -1,7 +1,7 @@
 package com.adventure.base.aspect;
 
 import com.adventure.base.util.exception.ForbiddenActionException;
-import com.adventure.base.util.exception.UserNotFoundException;
+import com.adventure.base.util.exception.notFound.UserNotFoundException;
 import com.adventure.base.util.exceptionResponse.UserExceptionResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
