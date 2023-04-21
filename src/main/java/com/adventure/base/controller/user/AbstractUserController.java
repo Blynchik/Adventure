@@ -14,7 +14,6 @@ public abstract class AbstractUserController {
 
     protected UserService userService;
 
-    @Autowired
     public AbstractUserController(UserService userService) {
         this.userService = userService;
     }

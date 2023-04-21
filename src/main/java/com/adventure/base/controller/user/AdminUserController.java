@@ -67,15 +67,17 @@ public class AdminUserController extends AbstractUserController {
 
 
         if (bindingResult.hasErrors()) {
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST)
-                    .body(bindingResult.getAllErrors().stream()
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(
+                    bindingResult.getAllErrors().stream()
                             .map(DefaultMessageSourceResolvable::getDefaultMessage));
         }
 
         userService.createNew(Converter.getUser(userDto));
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                userService.getByName(userDto.getName()).get());
+                Converter.getUserDto(
+                        userService.getByName((
+                                userDto.getName())).get()));
     }
 
     @PatchMapping("/{id}")
@@ -93,14 +95,14 @@ public class AdminUserController extends AbstractUserController {
                     if (!role.equals(Role.USER)) {
                         userService.removeRole(id, role);
                     } else {
-                        throw new ForbiddenActionException();
+                        throw new ForbiddenActionException("Нельзя удалить права пользователя");
                     }
                 }
 
             }
 
         } else {
-            throw new UserNotFoundException(String.valueOf(id));
+            throw new UserNotFoundException("id " + id);
         }
     }
 }

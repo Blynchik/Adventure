@@ -1,6 +1,7 @@
 package com.adventure.base.util;
 
 import com.adventure.base.dto.hero.HeroDto;
+import com.adventure.base.dto.hero.HeroDtoForCreating;
 import com.adventure.base.dto.user.UserDto;
 import com.adventure.base.dto.user.UserDtoForCreating;
 import com.adventure.base.model.Hero;
@@ -44,5 +45,10 @@ public class Converter {
         heroDto.setUser_id(hero.getUser().getId());
 
         return heroDto;
+    }
+
+    public static Hero getHero(HeroDtoForCreating heroDto) {
+        ModelMapper modelMapper = new ModelMapper();
+        return modelMapper.map(heroDto, Hero.class);
     }
 }

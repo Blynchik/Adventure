@@ -1,4 +1,4 @@
-package com.adventure.base.aspect;
+package com.adventure.base.advice;
 
 import com.adventure.base.util.exception.ForbiddenActionException;
 import com.adventure.base.util.exception.notFound.UserNotFoundException;
@@ -24,7 +24,7 @@ public class UserControllerExceptionHandler {
     @ExceptionHandler
     private ResponseEntity<UserExceptionResponse> handleException(ForbiddenActionException e) {
         UserExceptionResponse response = new UserExceptionResponse(
-                "Нельзя удалить права пользователя", LocalDateTime.now());
+        e.getMessage(), LocalDateTime.now());
 
         return new ResponseEntity<>(response, HttpStatus.FORBIDDEN);
     }

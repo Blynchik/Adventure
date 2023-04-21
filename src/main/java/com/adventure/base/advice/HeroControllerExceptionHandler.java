@@ -1,4 +1,4 @@
-package com.adventure.base.aspect;
+package com.adventure.base.advice;
 
 import com.adventure.base.util.exception.notFound.HeroNotFoundException;
 import com.adventure.base.util.exceptionResponse.HeroExceptionResponse;
