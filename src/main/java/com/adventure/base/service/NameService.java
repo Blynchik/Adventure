@@ -2,13 +2,15 @@ package com.adventure.base.service;
 
 import com.adventure.base.model.FirstName;
 import com.adventure.base.repository.NameRepository;
-import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -21,12 +23,17 @@ public class NameService {
         this.nameRepository = nameRepository;
     }
 
+    @Transactional
     public void addNew(String name){
         nameRepository.save(new FirstName(name));
     }
 
     public Optional<FirstName> getOne(int id){
         return nameRepository.findById(id);
+    }
+
+    public Optional<FirstName> getByName(String name){
+        return nameRepository.findByFirstName(name);
     }
 
     public String getRandomName(){
@@ -37,8 +44,21 @@ public class NameService {
         return nameRepository.findAll();
     }
 
+    public List<FirstName> getAllSorted(){
+        return nameRepository.findAll().stream()
+                .sorted(Comparator.comparing(FirstName::getFirstName)).toList();
+    }
+
     @Transactional
     public void delete(int id){
         nameRepository.deleteById(id);
+    }
+
+    public boolean idExistence(int id){
+        return nameRepository.existsById(id);
+    }
+
+    public boolean nameExistence(String name){
+        return getByName(name).isPresent();
     }
 }
