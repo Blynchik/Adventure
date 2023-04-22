@@ -8,3 +8,8 @@ values (1, 'ADMIN'),
 insert into hero(user_id, first_name, last_name)
 values (1, 'Random', 'Random');
 
+insert into first_name(first_name)
+values ('Вася'),
+       ('Паша'),
+       ('Гена'),
+       ('Жора');
