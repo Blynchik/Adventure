@@ -47,7 +47,7 @@ public abstract class AbstractHeroController {
         }
 
         return ResponseEntity.ok().body(
-                heroService.getUserHeroes(
+                heroService.getUserHeroesSortedByTime(
                                 userId).stream()
                         .map(Converter::getHeroDto)
                         .collect(Collectors.toList()));
@@ -64,7 +64,20 @@ public abstract class AbstractHeroController {
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
                 Converter.getHeroDto(
-                        heroService.getUserHeroes(userId).get(0)));
+                        heroService.getUserHeroesSortedByTime(userId).get(0)));
+    }
+
+    public ResponseEntity<?> createWithRandomName(int userId){
+
+        if (!userService.idExistence(userId)) {
+            throw new UserNotFoundException("id " + userId);
+        }
+
+        heroService.createWithRandomName(userId);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(
+                Converter.getHeroDto(
+                        heroService.getUserHeroesSortedByTime(userId).get(0)));
     }
 
     public void delete(int id) {

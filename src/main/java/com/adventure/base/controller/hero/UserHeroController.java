@@ -53,6 +53,11 @@ public class UserHeroController extends AbstractHeroController {
         return super.create(heroDto, authUser.id());
     }
 
+    @PostMapping("/createRandom")
+    public ResponseEntity<?> createOwnRandom(@AuthenticationPrincipal AuthUser authUser) {
+        return super.createWithRandomName(authUser.id());
+    }
+
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void deleteOwn(@AuthenticationPrincipal AuthUser authUser,

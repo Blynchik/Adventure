@@ -44,6 +44,12 @@ public class Hero {
         this.createdAt = createdAt;
     }
 
+    public Hero(User user, String firstName, String lastName) {
+        this.user = user;
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
+
     public int getId() {
         return id;
     }
