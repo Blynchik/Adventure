@@ -1,4 +1,4 @@
-package com.adventure.base;
+package com.adventure.base.util.namesHelper;
 
 import java.io.*;
 import java.util.HashSet;
@@ -7,9 +7,9 @@ import java.util.Set;
 public class NameChecker {
 
     public static void main(String[] args) {
-        String src = "C:\\Users\\Blynchik\\Desktop\\base\\base\\src\\main\\java\\com\\adventure\\base\\wet.txt";
-        String firstName = "C:\\Users\\Blynchik\\Desktop\\base\\base\\src\\main\\java\\com\\adventure\\base\\firstName.txt";
-        String lastName = "C:\\Users\\Blynchik\\Desktop\\base\\base\\src\\main\\java\\com\\adventure\\base\\lastName.txt";
+        String src = "C:\\Users\\Blynchik\\Desktop\\base\\base\\src\\main\\java\\com\\adventure\\base\\util\\namesHelper\\wet.txt";
+        String firstName = "C:\\Users\\Blynchik\\Desktop\\base\\base\\src\\main\\java\\com\\adventure\\base\\util\\namesHelper\\firstName.txt";
+        String lastName = "C:\\Users\\Blynchik\\Desktop\\base\\base\\src\\main\\java\\com\\adventure\\base\\util\\namesHelper\\lastName.txt";
 
         try (FileReader fileReader = new FileReader(src);
              BufferedReader reader = new BufferedReader(fileReader);
