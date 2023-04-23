@@ -34,6 +34,11 @@ public class UserHeroController extends AbstractHeroController {
         return super.getOne(id);
     }
 
+    @GetMapping("/rnd")
+    public String getRnd(){
+        return heroService.getRnd();
+    }
+
     @GetMapping()
     public ResponseEntity<List<HeroDto>> getOwn(@AuthenticationPrincipal AuthUser authUser) {
         return super.getUserHeroes(authUser.id());

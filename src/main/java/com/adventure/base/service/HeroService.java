@@ -49,6 +49,10 @@ public class HeroService {
         return heroRepository.findById(id);
     }
 
+    public String getRnd(){
+        return nameService.getRandomName() +" " + surnameService.getRandomSurname();
+    }
+
     public List<Hero> getAll() {
         return heroRepository.findAll();
     }
