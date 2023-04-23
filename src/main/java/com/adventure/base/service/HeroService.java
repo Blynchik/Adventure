@@ -17,14 +17,17 @@ public class HeroService {
     private final HeroRepository heroRepository;
     private final UserService userService;
     private final NameService nameService;
+    private final SurnameService surnameService;
 
     @Autowired
     public HeroService(HeroRepository heroRepository,
                        UserService userService,
-                       NameService nameService) {
+                       NameService nameService,
+                       SurnameService surnameService) {
         this.heroRepository = heroRepository;
         this.userService = userService;
         this.nameService = nameService;
+        this.surnameService = surnameService;
     }
 
     @Transactional
@@ -37,7 +40,7 @@ public class HeroService {
     public void createWithRandomName(int userId) {
         Hero hero = new Hero(userService.getOneById(userId).get(),
                 nameService.getRandomName(),
-                "Random");
+                surnameService.getRandomSurname());
 
         heroRepository.save(hero);
     }
