@@ -35,7 +35,7 @@ public class UserHeroController extends AbstractHeroController {
     }
 
     @GetMapping("/rnd")
-    public String getRnd(){
+    public String getRnd() {
         return heroService.getRnd();
     }
 
@@ -79,5 +79,23 @@ public class UserHeroController extends AbstractHeroController {
         }
 
         super.delete(id);
+    }
+
+    @PatchMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void killOwnHero(@AuthenticationPrincipal AuthUser authUser,
+                            @PathVariable int id) {
+
+        Optional<Hero> hero = heroService.getOneById(id);
+
+        if (hero.isEmpty()) {
+            throw new HeroNotFoundException("id " + id);
+        }
+
+        if (hero.get().getUser().getId() != authUser.id()) {
+            throw new ForbiddenActionException("Нельзя убить чужого героя");
+        }
+
+        super.killHero(id);
     }
 }

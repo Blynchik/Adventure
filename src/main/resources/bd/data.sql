@@ -6,7 +6,7 @@ values (1, 'ADMIN'),
        (1, 'USER');
 
 insert into hero(user_id, first_name, last_name)
-values (1, 'Random', 'Random');
+values (1, 'Test', 'Test');
 
 insert into first_name(first_name)
 values ('Себелла'),

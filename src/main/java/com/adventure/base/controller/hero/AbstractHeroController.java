@@ -23,9 +23,9 @@ public abstract class AbstractHeroController {
     protected UserService userService;
 
     public AbstractHeroController(HeroService heroService,
-                                  UserService userService){
-        this.heroService=heroService;
-        this.userService=userService;
+                                  UserService userService) {
+        this.heroService = heroService;
+        this.userService = userService;
     }
 
     public ResponseEntity<HeroDto> getOne(int id) {
@@ -60,6 +60,13 @@ public abstract class AbstractHeroController {
             throw new UserNotFoundException("id " + userId);
         }
 
+        List<Hero> heroes = heroService.getUserHeroesSortedByTime(userId);
+
+        if (!heroes.isEmpty() && heroes.get(0).isEnable()) {
+            throw new ForbiddenActionException("Нельзя создавать нового героя, пока жив старый");
+        }
+
+
         heroService.createNew(Converter.getHero(heroDto), userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
@@ -67,10 +74,16 @@ public abstract class AbstractHeroController {
                         heroService.getUserHeroesSortedByTime(userId).get(0)));
     }
 
-    public ResponseEntity<?> createWithRandomName(int userId){
+    public ResponseEntity<?> createWithRandomName(int userId) {
 
         if (!userService.idExistence(userId)) {
             throw new UserNotFoundException("id " + userId);
+        }
+
+        List<Hero> heroes = heroService.getUserHeroesSortedByTime(userId);
+
+        if (!heroes.isEmpty() && heroes.get(0).isEnable()) {
+            throw new ForbiddenActionException("Нельзя создавать нового героя, пока жив старый");
         }
 
         heroService.createWithRandomName(userId);
@@ -82,5 +95,9 @@ public abstract class AbstractHeroController {
 
     public void delete(int id) {
         heroService.delete(id);
+    }
+
+    public void killHero(int heroId){
+        heroService.killHero(heroId);
     }
 }

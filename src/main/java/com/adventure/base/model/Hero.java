@@ -34,6 +34,10 @@ public class Hero {
     @NotNull
     private Date createdAt = new Date();
 
+    @Column(name = "enable", nullable = false, columnDefinition = "boolean default true")
+    @NotNull
+    private boolean enable = true;
+
     public Hero() {
     }
 
@@ -88,5 +92,13 @@ public class Hero {
 
     public void setCreatedAt(Date createdAt) {
         this.createdAt = createdAt;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }

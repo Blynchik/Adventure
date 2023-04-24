@@ -49,8 +49,8 @@ public class HeroService {
         return heroRepository.findById(id);
     }
 
-    public String getRnd(){
-        return nameService.getRandomName() +" " + surnameService.getRandomSurname();
+    public String getRnd() {
+        return nameService.getRandomName() + " " + surnameService.getRandomSurname();
     }
 
     public List<Hero> getAll() {
@@ -71,5 +71,10 @@ public class HeroService {
 
     public boolean idExistence(int id) {
         return heroRepository.existsById(id);
+    }
+
+    @Transactional
+    public void killHero(int id) {
+        heroRepository.findById(id).get().setEnable(false);
     }
 }

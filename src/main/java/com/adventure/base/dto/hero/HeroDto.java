@@ -6,6 +6,8 @@ public class HeroDto extends HeroDtoForCreating{
 
     private int user_id;
 
+    private boolean enable;
+
     public int getId() {
         return id;
     }
@@ -20,5 +22,13 @@ public class HeroDto extends HeroDtoForCreating{
 
     public void setUser_id(int user_id) {
         this.user_id = user_id;
+    }
+
+    public boolean isEnable() {
+        return enable;
+    }
+
+    public void setEnable(boolean enable) {
+        this.enable = enable;
     }
 }
