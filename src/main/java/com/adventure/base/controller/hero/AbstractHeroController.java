@@ -66,12 +66,12 @@ public abstract class AbstractHeroController {
             throw new ForbiddenActionException("Нельзя создавать нового героя, пока жив старый");
         }
 
+        Hero hero = Converter.getHero(heroDto);
 
-        heroService.createNew(Converter.getHero(heroDto), userId);
+        heroService.createNew(hero, userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                Converter.getHeroDto(
-                        heroService.getUserHeroesSortedByTime(userId).get(0)));
+                Converter.getHeroDto(hero));
     }
 
     public ResponseEntity<?> createWithRandomName(int userId) {
@@ -86,11 +86,10 @@ public abstract class AbstractHeroController {
             throw new ForbiddenActionException("Нельзя создавать нового героя, пока жив старый");
         }
 
-        heroService.createWithRandomName(userId);
+        Hero hero = heroService.createWithRandomName(userId);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                Converter.getHeroDto(
-                        heroService.getUserHeroesSortedByTime(userId).get(0)));
+                Converter.getHeroDto(hero));
     }
 
     public void delete(int id) {

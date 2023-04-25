@@ -76,9 +76,10 @@ public class SurnameController {
                             .map(DefaultMessageSourceResolvable::getDefaultMessage));
         }
 
-        surnameService.addNew(surname.getLastName());
+        LastName lastName = new LastName(surname.getLastName());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                surnameService.getBySurname(surname.getLastName()).get());
+        surnameService.addNew(lastName);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(lastName);
     }
 }

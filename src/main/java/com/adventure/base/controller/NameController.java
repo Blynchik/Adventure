@@ -76,9 +76,10 @@ public class NameController {
                             .map(DefaultMessageSourceResolvable::getDefaultMessage));
         }
 
-        nameService.addNew(name.getFirstName());
+        FirstName firstName = new FirstName(name.getFirstName());
 
-        return ResponseEntity.status(HttpStatus.CREATED).body(
-                nameService.getByName(name.getFirstName()).get());
+        nameService.addNew(firstName);
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(firstName);
     }
 }

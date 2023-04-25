@@ -2,6 +2,7 @@ package com.adventure.base.controller.user;
 
 import com.adventure.base.dto.user.UserDto;
 import com.adventure.base.dto.user.UserDtoForCreating;
+import com.adventure.base.model.User;
 import com.adventure.base.model.role.ActionWithRole;
 import com.adventure.base.model.role.Role;
 import com.adventure.base.service.UserService;
@@ -72,12 +73,12 @@ public class AdminUserController extends AbstractUserController {
                             .map(DefaultMessageSourceResolvable::getDefaultMessage));
         }
 
-        userService.createNew(Converter.getUser(userDto));
+        User user = Converter.getUser(userDto);
+
+        userService.createNew(user);
 
         return ResponseEntity.status(HttpStatus.CREATED).body(
-                Converter.getUserDto(
-                        userService.getByName((
-                                userDto.getName())).get()));
+                Converter.getUserDto(user));
     }
 
     @PatchMapping("/{id}")

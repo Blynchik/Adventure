@@ -22,8 +22,8 @@ public class SurnameService {
     }
 
     @Transactional
-    public void addNew(String surname){
-        surnameRepository.save(new LastName(surname));
+    public void addNew(LastName lastName){
+        surnameRepository.save(lastName);
     }
 
     public Optional<LastName> getOne(int id){

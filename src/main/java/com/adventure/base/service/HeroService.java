@@ -37,12 +37,13 @@ public class HeroService {
     }
 
     @Transactional
-    public void createWithRandomName(int userId) {
+    public Hero createWithRandomName(int userId) {
         Hero hero = new Hero(userService.getOneById(userId).get(),
                 nameService.getRandomName(),
                 surnameService.getRandomSurname());
 
         heroRepository.save(hero);
+        return hero;
     }
 
     public Optional<Hero> getOneById(int id) {

@@ -22,8 +22,8 @@ public class NameService {
     }
 
     @Transactional
-    public void addNew(String name){
-        nameRepository.save(new FirstName(name));
+    public void addNew(FirstName firstName){
+        nameRepository.save(firstName);
     }
 
     public Optional<FirstName> getOne(int id){
