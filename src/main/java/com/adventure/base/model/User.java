@@ -4,10 +4,12 @@ import com.adventure.base.model.role.Role;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
 
+import java.time.LocalDate;
 import java.util.*;
 
 @Entity
@@ -21,13 +23,14 @@ public class User {
 
     @Column(name = "name")
     @NotBlank
+    @Size(min = 2)
     @NotNull
     private String name;
 
     @Column(name = "registered_at", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    private Date registeredAt = new Date();
+    private LocalDate registeredAt = LocalDate.now();
 
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "role",
@@ -37,6 +40,7 @@ public class User {
     @ElementCollection(fetch = FetchType.EAGER)
     @JoinColumn
     @OnDelete(action = OnDeleteAction.CASCADE)
+    @NotNull
     private Set<Role> roles = new HashSet<>();
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
@@ -49,14 +53,27 @@ public class User {
         this(u.name, u.registeredAt, u.roles);
     }
 
-    public User(String name, Role... roles) {
-        this(name, new Date(), Arrays.asList((roles)));
+    public User(String name, HashSet<Role> roles) {
+        this(name, LocalDate.now(), roles);
     }
 
-    public User(String name, Date registeredAt, Collection<Role> roles) {
+    public User(String name, LocalDate registeredAt, Collection<Role> roles) {
         this.name = name;
         this.registeredAt = registeredAt;
         setRoles(roles);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        User user = (User) o;
+        return id == user.id && name.equals(user.name) && registeredAt.equals(user.registeredAt);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id, name, registeredAt);
     }
 
     public int getId() {
@@ -83,11 +100,11 @@ public class User {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
 
-    public Date getRegisteredAt() {
+    public LocalDate getRegisteredAt() {
         return registeredAt;
     }
 
-    public void setRegisteredAt(Date registeredAt) {
+    public void setRegisteredAt(LocalDate registeredAt) {
         this.registeredAt = registeredAt;
     }
 

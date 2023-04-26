@@ -2,6 +2,7 @@ package com.adventure.base.dto.user;
 
 import com.adventure.base.model.role.Role;
 
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -12,7 +13,7 @@ public class UserDto extends UserDtoForCreating {
 
     private Set<Role> roles;
 
-    private Date registered_at;
+    private LocalDate registered_at;
 
     private List<Integer> heroesId;
 
@@ -32,11 +33,11 @@ public class UserDto extends UserDtoForCreating {
         this.roles = roles;
     }
 
-    public Date getRegistered_at() {
+    public LocalDate getRegistered_at() {
         return registered_at;
     }
 
-    public void setRegistered_at(Date registered_at) {
+    public void setRegistered_at(LocalDate registered_at) {
         this.registered_at = registered_at;
     }
 
