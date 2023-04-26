@@ -9,7 +9,7 @@ import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.springframework.util.CollectionUtils;
 
-import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.*;
 
 @Entity
@@ -19,7 +19,7 @@ public class User {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
     @Column(name = "name")
     @NotBlank
@@ -30,7 +30,7 @@ public class User {
     @Column(name = "registered_at", nullable = false, columnDefinition = "timestamp default now()", updatable = false)
     @NotNull
     @Temporal(TemporalType.TIMESTAMP)
-    private LocalDate registeredAt = LocalDate.now();
+    private LocalDateTime registeredAt = LocalDateTime.now();
 
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "role",
@@ -54,10 +54,10 @@ public class User {
     }
 
     public User(String name, HashSet<Role> roles) {
-        this(name, LocalDate.now(), roles);
+        this(name, LocalDateTime.now(), roles);
     }
 
-    public User(String name, LocalDate registeredAt, Collection<Role> roles) {
+    public User(String name, LocalDateTime registeredAt, Collection<Role> roles) {
         this.name = name;
         this.registeredAt = registeredAt;
         setRoles(roles);
@@ -76,11 +76,11 @@ public class User {
         return Objects.hash(id, name, registeredAt);
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -100,11 +100,11 @@ public class User {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
 
-    public LocalDate getRegisteredAt() {
+    public LocalDateTime getRegisteredAt() {
         return registeredAt;
     }
 
-    public void setRegisteredAt(LocalDate registeredAt) {
+    public void setRegisteredAt(LocalDateTime registeredAt) {
         this.registeredAt = registeredAt;
     }
 

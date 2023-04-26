@@ -1,26 +1,30 @@
 package com.adventure.base.dto.hero;
 
+import java.time.LocalDateTime;
+
 public class HeroDto extends HeroDtoForCreating{
 
-    private int id;
+    private Integer id;
 
-    private int user_id;
+    private Integer user_id;
 
     private boolean enable;
 
-    public int getId() {
+    private LocalDateTime createdAt;
+
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
-    public int getUser_id() {
+    public Integer getUser_id() {
         return user_id;
     }
 
-    public void setUser_id(int user_id) {
+    public void setUser_id(Integer user_id) {
         this.user_id = user_id;
     }
 
@@ -30,5 +34,13 @@ public class HeroDto extends HeroDtoForCreating{
 
     public void setEnable(boolean enable) {
         this.enable = enable;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public void setCreatedAt(LocalDateTime createdAt) {
+        this.createdAt = createdAt;
     }
 }
