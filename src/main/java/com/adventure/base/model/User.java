@@ -1,7 +1,6 @@
 package com.adventure.base.model;
 
 import com.adventure.base.model.role.Role;
-import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
