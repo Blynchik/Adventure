@@ -50,14 +50,14 @@ public abstract class AbstractUserController {
         return ResponseEntity.noContent().build();
     }
 
-    private void checkUserExistence(int id) {
+    protected void checkUserExistence(int id) {
 
         if (!userService.idExistence(id)) {
             throw new UserNotFoundException("id " + id);
         }
     }
 
-    private void checkUserExistence(Optional<User> user, String name) {
+    protected void checkUserExistence(Optional<User> user, String name) {
 
         if (user.isEmpty()) {
             throw new UserNotFoundException(name);

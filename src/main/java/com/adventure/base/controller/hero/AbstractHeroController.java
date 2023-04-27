@@ -22,6 +22,7 @@ public abstract class AbstractHeroController {
     protected HeroService heroService;
     protected UserService userService;
 
+    @Autowired
     public AbstractHeroController(HeroService heroService,
                                   UserService userService) {
         this.heroService = heroService;
@@ -32,9 +33,7 @@ public abstract class AbstractHeroController {
 
         Optional<Hero> hero = heroService.getOneById(id);
 
-        if (hero.isEmpty()) {
-            throw new HeroNotFoundException("id " + id);
-        }
+        checkHeroExistence(hero, id);
 
         return ResponseEntity.ok().body(
                 Converter.getHeroDto(hero.get()));
@@ -42,9 +41,7 @@ public abstract class AbstractHeroController {
 
     public ResponseEntity<List<HeroDto>> getUserHeroes(int userId) {
 
-        if (!userService.idExistence(userId)) {
-            throw new UserNotFoundException("id " + userId);
-        }
+        checkUserExistence(userId);
 
         return ResponseEntity.ok().body(
                 heroService.getUserHeroesSortedByTime(
@@ -56,9 +53,7 @@ public abstract class AbstractHeroController {
     public ResponseEntity<?> create(HeroDtoForCreating heroDto,
                                     int userId) {
 
-        if (!userService.idExistence(userId)) {
-            throw new UserNotFoundException("id " + userId);
-        }
+        checkUserExistence(userId);
 
         List<Hero> heroes = heroService.getUserHeroesSortedByTime(userId);
 
@@ -76,9 +71,7 @@ public abstract class AbstractHeroController {
 
     public ResponseEntity<?> createWithRandomName(int userId) {
 
-        if (!userService.idExistence(userId)) {
-            throw new UserNotFoundException("id " + userId);
-        }
+        checkUserExistence(userId);
 
         List<Hero> heroes = heroService.getUserHeroesSortedByTime(userId);
 
@@ -98,5 +91,19 @@ public abstract class AbstractHeroController {
 
     public void killHero(int heroId){
         heroService.killHero(heroId);
+    }
+
+    protected void checkUserExistence(int id) {
+
+        if (!userService.idExistence(id)) {
+            throw new UserNotFoundException("id " + id);
+        }
+    }
+
+    protected void checkHeroExistence(Optional<Hero> hero, int id) {
+
+        if (hero.isEmpty()) {
+            throw new HeroNotFoundException("id " + id);
+        }
     }
 }

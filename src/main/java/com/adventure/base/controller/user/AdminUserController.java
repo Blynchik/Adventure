@@ -19,7 +19,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestController
@@ -88,23 +87,20 @@ public class AdminUserController extends AbstractUserController {
                             @RequestParam ActionWithRole action,
                             @RequestParam Role role) {
 
-        if (userService.idExistence(id)) {
+        checkUserExistence(id);
 
-            switch (action) {
-                case ADD -> userService.addRole(id, role);
+        switch (action) {
+            case ADD -> userService.addRole(id, role);
 
-                case REMOVE -> {
-                    if (!role.equals(Role.USER)) {
-                        userService.removeRole(id, role);
-                    } else {
-                        throw new ForbiddenActionException("Нельзя удалить права пользователя");
-                    }
+            case REMOVE -> {
+                if (!role.equals(Role.USER)) {
+                    userService.removeRole(id, role);
+                } else {
+                    throw new ForbiddenActionException("Нельзя удалить права пользователя");
                 }
-
             }
 
-        } else {
-            throw new UserNotFoundException("id " + id);
         }
+
     }
 }
