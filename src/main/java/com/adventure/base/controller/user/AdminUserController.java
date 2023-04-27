@@ -19,6 +19,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.stream.Collectors;
 
 @RestController
@@ -51,13 +52,13 @@ public class AdminUserController extends AbstractUserController {
 
     @GetMapping("/{id}")
     public ResponseEntity<UserDto> getOne(@PathVariable int id) {
-        return super.getOne(id);
+        return super.getOneById(id);
     }
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
-    public void delete(@PathVariable int id) {
-        super.delete(id);
+    public ResponseEntity<UserDto> delete(@PathVariable int id) {
+        return super.delete(id);
     }
 
     @PostMapping()

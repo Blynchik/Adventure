@@ -21,7 +21,7 @@ public class UsualUserController extends AbstractUserController {
 
     @GetMapping
     public ResponseEntity<UserDto> getOwn(@AuthenticationPrincipal AuthUser authUser) {
-        return super.getOne(authUser.id());
+        return super.getOneById(authUser.id());
     }
 
     @DeleteMapping
@@ -32,6 +32,6 @@ public class UsualUserController extends AbstractUserController {
 
     @GetMapping("/getAnotherByName")
     public ResponseEntity<UserDto> getAnother(@RequestParam String name) {
-        return super.getAnother(name);
+        return super.getOneByName(name);
     }
 }
