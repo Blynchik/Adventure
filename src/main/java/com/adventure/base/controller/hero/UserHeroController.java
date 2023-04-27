@@ -70,7 +70,7 @@ public class UserHeroController extends AbstractHeroController {
 
         Optional<Hero> hero = heroService.getOneById(id);
 
-        checkHeroExistence(hero, authUser.id());
+        checkHeroExistence(hero, id);
 
         if (hero.get().getUser().getId() != authUser.id()) {
             throw new ForbiddenActionException("Нельзя удалить чужого героя");

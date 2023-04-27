@@ -12,13 +12,13 @@ import java.util.stream.Collectors;
 
 public class Converter {
 
+    private final static ModelMapper modelMapper = new ModelMapper();
+
     public static User getUser(UserDtoForCreating userDto) {
-        ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(userDto, User.class);
     }
 
     public static UserDto getUserDto(User user) {
-        ModelMapper modelMapper = new ModelMapper();
         UserDto userDto = modelMapper.map(user, UserDto.class);
 
         userDto.setRegistered_at(user.getRegisteredAt());
@@ -27,7 +27,6 @@ public class Converter {
     }
 
     public static UserDto getEnrichedUserDto(User user){
-        ModelMapper modelMapper = new ModelMapper();
         UserDto userDto = modelMapper.map(user, UserDto.class);
 
         userDto.setRegistered_at(user.getRegisteredAt());
@@ -39,7 +38,6 @@ public class Converter {
     }
 
     public static HeroDto getHeroDto(Hero hero) {
-        ModelMapper modelMapper = new ModelMapper();
         HeroDto heroDto = modelMapper.map(hero, HeroDto.class);
 
         heroDto.setUser_id(hero.getUser().getId());
@@ -48,7 +46,6 @@ public class Converter {
     }
 
     public static Hero getHero(HeroDtoForCreating heroDto) {
-        ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(heroDto, Hero.class);
     }
 }
